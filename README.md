@@ -5,7 +5,7 @@ colorFrom: purple
 colorTo: blue
 sdk: streamlit
 sdk_version: 1.10.0
-app_file: app.py
+app_file: rock_fact_checker.py
 pinned: false
 license: apache-2.0
 ---
