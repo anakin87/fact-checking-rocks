@@ -1,0 +1,1 @@
+farm-haystack[faiss]==1.7.1
