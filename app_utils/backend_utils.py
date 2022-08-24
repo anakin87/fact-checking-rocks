@@ -40,19 +40,33 @@ pipe = start_haystack()
 # the pipeline is not included as parameter of the following function,
 # because it is difficult to cache
 @st.cache(persist=True, allow_output_mutation=True)
-def query(question: str, retriever_top_k: int = 5):
-    """Run query and get answers"""
+def query(statement: str, retriever_top_k: int = 5):
+    """Run query and verify statement"""
     params = {"retriever": {"top_k": retriever_top_k}}
-    results = pipe.run(question, params=params)
-    print(results)
+    results = pipe.run(statement, params=params)
+
+    scores, agg_con, agg_neu, agg_ent = 0,0,0,0
+    for doc in results['documents']:
+        scores+=doc.score
+        ent_info=doc.meta['entailment_info']
+        con,neu,ent = ent_info['contradiction'], ent_info['neutral'], ent_info['entailment']
+        agg_con+=con*doc.score
+        agg_neu+=neu*doc.score
+        agg_ent+=ent*doc.score
+    
+    results['agg_entailment_info'] = {
+        'contradiction': round(agg_con/scores, 2),
+                            'neutral': round(agg_neu/scores, 2),
+                            'entailment': round(agg_ent/scores, 2)}
+
     return results      
 
 @st.cache()
-def load_questions():
+def load_statements():
     """Load statements from file"""
     with open(STATEMENTS_PATH) as fin:
-        questions = [line.strip() for line in fin.readlines()
+        statements = [line.strip() for line in fin.readlines()
                      if not line.startswith('#')]
-    return questions
+    return statements
 
               
