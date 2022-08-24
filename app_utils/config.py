@@ -1,6 +1,5 @@
-
-INDEX_DIR = 'data/index'
-STATEMENTS_PATH = 'data/statements.txt'
+INDEX_DIR = "data/index"
+STATEMENTS_PATH = "data/statements.txt"
 
 RETRIEVER_MODEL = "sentence-transformers/msmarco-distilbert-base-tas-b"
 RETRIEVER_MODEL_FORMAT = "sentence_transformers"
