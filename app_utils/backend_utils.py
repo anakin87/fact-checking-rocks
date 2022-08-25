@@ -84,8 +84,8 @@ def query(statement: str, retriever_top_k: int = 5):
             break
 
     results["agg_entailment_info"] = {
-        "contradiction": round(agg_con / scores, 2),
-        "neutral": round(agg_neu / scores, 2),
-        "entailment": round(agg_ent / scores, 2),
+        "contradiction": float(round(agg_con / scores, 2)),
+        "neutral": float(round(agg_neu / scores, 2)),
+        "entailment": float(round(agg_ent / scores, 2)),
     }
     return results

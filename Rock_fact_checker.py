@@ -60,7 +60,7 @@ def main():
         # Unfortunately necessary as the Random statement button is _below_ the textbox
         # Adapted for Streamlit>=1.12
         if hasattr(st, 'scriptrunner'):
-            raise st.scriptrunner.script_runner.RerunException(st.scriptrunner.script_requests.RerunData(None))
+            raise st.scriptrunner.script_runner.RerunException(st.scriptrunner.script_requests.RerunData(""))
         else:
             raise st.runtime.scriptrunner.script_runner.RerunException(
             st.runtime.scriptrunner.script_requests.RerunData("") 
