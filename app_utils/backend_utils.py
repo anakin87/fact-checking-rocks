@@ -77,9 +77,9 @@ def query(statement: str, retriever_top_k: int = 5):
         agg_neu += neu * doc.score
         agg_ent += ent * doc.score
 
-        # if in the first 3 documents there is a strong evidence of entailment/contradiction,
-        # there is non need to consider less relevant documents
-        if i == 2 and max(agg_con, agg_ent) / scores > 0.5:
+        # if in the first documents there is a strong evidence of entailment/contradiction,
+        # there is no need to consider less relevant documents
+        if max(agg_con, agg_ent) / scores > 0.5:
             results["documents"] = results["documents"][: i + 1]
             break
 

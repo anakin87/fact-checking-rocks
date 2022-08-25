@@ -76,6 +76,7 @@ def main():
         with st.spinner("🧠 &nbsp;&nbsp; Performing neural search on documents..."):
             try:
                 st.session_state.results = query(statement, RETRIEVER_TOP_K)
+                print(query)
                 time_end = time.time()
                 print(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
                 print(f"elapsed time: {time_end - time_start}")
