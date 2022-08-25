@@ -59,8 +59,11 @@ def main():
         # Re-runs the script setting the random statement as the textbox value
         # Unfortunately necessary as the Random statement button is _below_ the textbox
         # Adapted for Streamlit>=1.12
-        raise st.runtime.scriptrunner.script_runner.RerunException(
-            st.runtime.scriptrunner.script_requests.RerunData("")
+        if hasattr(st, 'scriptrunner'):
+            raise st.scriptrunner.script_runner.RerunException(st.scriptrunner.script_requests.RerunData(None))
+        else:
+            raise st.runtime.scriptrunner.script_runner.RerunException(
+            st.runtime.scriptrunner.script_requests.RerunData("") 
         )
     else:
         st.session_state.random_statement_requested = False
