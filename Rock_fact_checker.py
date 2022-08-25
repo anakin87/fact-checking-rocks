@@ -4,8 +4,6 @@ import logging
 from json import JSONDecodeError
 
 import streamlit as st
-import pandas as pd
-import plotly.express as px
 
 from app_utils.backend_utils import load_statements, query
 from app_utils.frontend_utils import (
@@ -13,6 +11,7 @@ from app_utils.frontend_utils import (
     reset_results,
     entailment_html_messages,
     create_df_for_relevant_snippets,
+    create_ternary_plot,
 )
 from app_utils.config import RETRIEVER_TOP_K
 
@@ -59,12 +58,14 @@ def main():
         # Re-runs the script setting the random statement as the textbox value
         # Unfortunately necessary as the Random statement button is _below_ the textbox
         # Adapted for Streamlit>=1.12
-        if hasattr(st, 'scriptrunner'):
-            raise st.scriptrunner.script_runner.RerunException(st.scriptrunner.script_requests.RerunData(""))
+        if hasattr(st, "scriptrunner"):
+            raise st.scriptrunner.script_runner.RerunException(
+                st.scriptrunner.script_requests.RerunData("")
+            )
         else:
             raise st.runtime.scriptrunner.script_runner.RerunException(
-            st.runtime.scriptrunner.script_requests.RerunData("") 
-        )
+                st.runtime.scriptrunner.script_requests.RerunData("")
+            )
     else:
         st.session_state.random_statement_requested = False
     run_query = (
@@ -79,7 +80,7 @@ def main():
         with st.spinner("🧠 &nbsp;&nbsp; Performing neural search on documents..."):
             try:
                 st.session_state.results = query(statement, RETRIEVER_TOP_K)
-                print(query)
+                print(statement)
                 time_end = time.time()
                 print(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
                 print(f"elapsed time: {time_end - time_start}")
@@ -105,20 +106,14 @@ def main():
 
         st.markdown(f"###### Aggregate entailment information:")
         col1, col2 = st.columns([2, 1])
-        df_agg_entailment_info = pd.DataFrame([results["agg_entailment_info"]])
-        fig = px.scatter_ternary(
-            df_agg_entailment_info,
-            a="contradiction",
-            b="neutral",
-            c="entailment",
-            size="contradiction",
-        )
+        agg_entailment_info = results["agg_entailment_info"]
+        fig = create_ternary_plot(agg_entailment_info)
         with col1:
             st.plotly_chart(fig, use_container_width=True)
         with col2:
             st.write(results["agg_entailment_info"])
 
-        st.markdown(f"###### Relevant snippets:")
+        st.markdown(f"###### Most Relevant snippets:")
         df, urls = create_df_for_relevant_snippets(docs)
         st.dataframe(df)
 

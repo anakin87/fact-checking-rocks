@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import plotly.graph_objects as go
+
 
 entailment_html_messages = {
     "entailment": 'The knowledge base seems to <span style="color:green">confirm</span> your statement',
@@ -18,6 +20,57 @@ def reset_results(*args):
     st.session_state.answer = None
     st.session_state.results = None
     st.session_state.raw_json = None
+
+
+def create_ternary_plot(entailment_data):
+    hover_text = ""
+    for label, value in entailment_data.items():
+        hover_text += f"{label}: {value}<br>"
+
+    fig = go.Figure(
+        go.Scatterternary(
+            {
+                "cliponaxis": False,
+                "mode": "markers",
+                "a": [i for i in map(lambda x: x["entailment"], [entailment_data])],
+                "b": [i for i in map(lambda x: x["contradiction"], [entailment_data])],
+                "c": [i for i in map(lambda x: x["neutral"], [entailment_data])],
+                "hoverinfo": "text",
+                "text": hover_text,
+                "marker": {
+                    "color": "#636efa",
+                    "size": [0.01],
+                    "sizemode": "area",
+                    "sizeref": 2.5e-05,
+                    "symbol": "circle",
+                },
+            }
+        )
+    )
+
+    fig.update_layout(
+        {
+            "ternary": {
+                "sum": 1,
+                "aaxis": makeAxis("Entailment", 0),
+                "baxis": makeAxis("<br>Contradiction", 45),
+                "caxis": makeAxis("<br>Neutral", -45),
+            }
+        }
+    )
+    return fig
+
+
+def makeAxis(title, tickangle):
+    return {
+        "title": title,
+        "titlefont": {"size": 20},
+        "tickangle": tickangle,
+        "tickcolor": "rgba(0,0,0,0)",
+        "ticklen": 5,
+        "showline": False,
+        "showgrid": True,
+    }
 
 
 def highlight_cols(s):
