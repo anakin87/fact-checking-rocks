@@ -30,7 +30,7 @@ def main():
     set_state_if_absent("raw_json", None)
     set_state_if_absent("random_statement_requested", False)
 
-    st.write("# Fact checking 🎸 Rocks!")
+    st.write("# Fact Checking 🎸 Rocks!")
     st.write()
     st.markdown(
         """

@@ -11,7 +11,7 @@ entailment_html_messages = {
 
 def build_sidebar():
     sidebar="""
-    <h1 style='text-align: center'>Fact checking 🎸 Rocks!</h1>
+    <h1 style='text-align: center'>Fact Checking 🎸 Rocks!</h1>
     <div style='text-align: center'>
     <i>Fact checking baseline combining dense retrieval and textual entailment</i>
     <p><br/><a href='https://github.com/anakin87/fact-checking-rocks'>Github project</a> - Based on <a href='https://github.com/deepset-ai/haystack'>Haystack</a></p>
