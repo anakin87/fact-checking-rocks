@@ -12,12 +12,16 @@ from app_utils.frontend_utils import (
     entailment_html_messages,
     create_df_for_relevant_snippets,
     create_ternary_plot,
+    build_sidebar
 )
 from app_utils.config import RETRIEVER_TOP_K
 
 
 def main():
+
     statements = load_statements()
+
+    build_sidebar()
 
     # Persistent state
     set_state_if_absent("statement", "Elvis Presley is alive")

@@ -9,6 +9,12 @@ entailment_html_messages = {
     "neutral": 'The knowledge base is <span style="color:darkgray">neutral</span> about your statement',
 }
 
+def build_sidebar():
+    st.sidebar.markdown('# Fact checking 🎸 Rocks!')
+    st.sidebar.markdown('*Fact checking baseline combining dense retrieval and textual entailment*')
+    st.sidebar.markdown('[Github project](https://github.com/anakin87/fact-checking-rocks) - Based on [Haystack](https://github.com/deepset-ai/haystack)')
+    st.sidebar.markdown('<small>Data crawled from [Wikipedia](https://en.wikipedia.org/wiki/List_of_mainstream_rock_performers).</small>', unsafe_allow_html=True)
+
 
 def set_state_if_absent(key, value):
     if key not in st.session_state:
