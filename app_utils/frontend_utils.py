@@ -10,11 +10,15 @@ entailment_html_messages = {
 }
 
 def build_sidebar():
-    st.sidebar.markdown('# Fact checking 🎸 Rocks!')
-    st.sidebar.markdown('*Fact checking baseline combining dense retrieval and textual entailment*')
-    st.sidebar.markdown('[Github project](https://github.com/anakin87/fact-checking-rocks) - Based on [Haystack](https://github.com/deepset-ai/haystack)')
-    st.sidebar.markdown('<small>Data crawled from [Wikipedia](https://en.wikipedia.org/wiki/List_of_mainstream_rock_performers).</small>', unsafe_allow_html=True)
-
+    sidebar="""
+    <h1 style='text-align: center'>Fact checking 🎸 Rocks!</h1>
+    <div style='text-align: center'>
+    <i>Fact checking baseline combining dense retrieval and textual entailment</i>
+    <p><br/><a href='https://github.com/anakin87/fact-checking-rocks'>Github project</a> - Based on <a href='https://github.com/deepset-ai/haystack'>Haystack</a></p>
+    <p><small><a href='https://en.wikipedia.org/wiki/List_of_mainstream_rock_performers'>Data crawled from Wikipedia</a></small></p>
+    </div>
+    """
+    st.sidebar.markdown(sidebar, unsafe_allow_html=True)
 
 def set_state_if_absent(key, value):
     if key not in st.session_state:
