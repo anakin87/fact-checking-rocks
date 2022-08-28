@@ -9,8 +9,9 @@ entailment_html_messages = {
     "neutral": 'The knowledge base is <span style="color:darkgray">neutral</span> about your statement',
 }
 
+
 def build_sidebar():
-    sidebar="""
+    sidebar = """
     <h1 style='text-align: center'>Fact Checking 🎸 Rocks!</h1>
     <div style='text-align: center'>
     <i>Fact checking baseline combining dense retrieval and textual entailment</i>
@@ -19,6 +20,7 @@ def build_sidebar():
     </div>
     """
     st.sidebar.markdown(sidebar, unsafe_allow_html=True)
+
 
 def set_state_if_absent(key, value):
     if key not in st.session_state:
@@ -33,6 +35,9 @@ def reset_results(*args):
 
 
 def create_ternary_plot(entailment_data):
+    """
+    Create a Plotly ternary plot for the given entailment dict.
+    """
     hover_text = ""
     for label, value in entailment_data.items():
         hover_text += f"{label}: {value}<br>"
@@ -83,14 +88,11 @@ def makeAxis(title, tickangle):
     }
 
 
-def highlight_cols(s):
-    coldict = {"con": "#FFA07A", "neu": "#E5E4E2", "ent": "#a9d39e"}
-    if s.name in coldict.keys():
-        return ["background-color: {}".format(coldict[s.name])] * len(s)
-    return [""] * len(s)
-
-
 def create_df_for_relevant_snippets(docs):
+    """
+    Create a dataframe that contains all relevant snippets.
+    Also returns the URLs
+    """
     rows = []
     urls = {}
     for doc in docs:
@@ -106,3 +108,10 @@ def create_df_for_relevant_snippets(docs):
         rows.append(row)
         df = pd.DataFrame(rows).style.apply(highlight_cols)
     return df, urls
+
+
+def highlight_cols(s):
+    coldict = {"con": "#FFA07A", "neu": "#E5E4E2", "ent": "#a9d39e"}
+    if s.name in coldict.keys():
+        return ["background-color: {}".format(coldict[s.name])] * len(s)
+    return [""] * len(s)

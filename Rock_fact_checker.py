@@ -12,15 +12,13 @@ from app_utils.frontend_utils import (
     entailment_html_messages,
     create_df_for_relevant_snippets,
     create_ternary_plot,
-    build_sidebar
+    build_sidebar,
 )
 from app_utils.config import RETRIEVER_TOP_K
 
 
 def main():
-
     statements = load_statements()
-
     build_sidebar()
 
     # Persistent state
@@ -120,7 +118,6 @@ def main():
         st.markdown(f"###### Most Relevant snippets:")
         df, urls = create_df_for_relevant_snippets(docs)
         st.dataframe(df)
-
         str_wiki_pages = "Wikipedia source pages: "
         for doc, url in urls.items():
             str_wiki_pages += f"[{doc}]({url}) "

@@ -31,7 +31,7 @@ def load_statements():
 )
 def start_haystack():
     """
-    load document store, retriever, reader and create pipeline
+    load document store, retriever, entailment checker and create pipeline
     """
     shutil.copy(f"{INDEX_DIR}/faiss_document_store.db", ".")
     document_store = FAISSDocumentStore(
@@ -39,13 +39,11 @@ def start_haystack():
         faiss_config_path=f"{INDEX_DIR}/my_faiss_index.json",
     )
     print(f"Index size: {document_store.get_document_count()}")
-
     retriever = EmbeddingRetriever(
         document_store=document_store,
         embedding_model=RETRIEVER_MODEL,
         model_format=RETRIEVER_MODEL_FORMAT,
     )
-
     entailment_checker = EntailmentChecker(model_name_or_path=NLI_MODEL, use_gpu=False)
 
     pipe = Pipeline()
@@ -84,8 +82,8 @@ def query(statement: str, retriever_top_k: int = 5):
             break
 
     results["agg_entailment_info"] = {
-        "contradiction": float(round(agg_con / scores, 2)),
-        "neutral": float(round(agg_neu / scores, 2)),
-        "entailment": float(round(agg_ent / scores, 2)),
+        "contradiction": round(agg_con / scores, 2),
+        "neutral": round(agg_neu / scores, 2),
+        "entailment": round(agg_ent / scores, 2),
     }
     return results
