@@ -61,7 +61,7 @@ In a nutshell, the flow is as follows:
   * **no organic evaluation** was performed, but only manual experiments.
 
 While keeping this simple approach, some **improvements** could be made:
-* For reasons of simplicity and infrastructural limitations, the retrieval uses only a very small portion of the Wikipedia data (artists pags from the [List of mainstream rock performers](https://en.wikipedia.org/wiki/List_of_mainstream_rock_performers)). With these few data available, in many cases the knowledge base remains neutral even with respect to statements about rock albums/songs. Certainly, fact checking **quality could improve by expanding the knowledge base** and possibly extending it to the entire Wikipedia.
+* For reasons of simplicity and infrastructural limitations, the retrieval uses only a very small portion of the Wikipedia data (artists pages from the [List of mainstream rock performers](https://en.wikipedia.org/wiki/List_of_mainstream_rock_performers)). With these few data available, in many cases the knowledge base remains neutral even with respect to statements about rock albums/songs. Certainly, fact checking **quality could improve by expanding the knowledge base** and possibly extending it to the entire Wikipedia.
 * Both the retriever model and the Natural Language Inference model are general purpose models and have not been fine-tuned for our domain. Undoubtedly they can **show better performance if fine-tuned in the rock music domain**. Particularly, the retriever model might be adapted with low effort, using [Generative Pseudo Labelling](https://haystack.deepset.ai/guides/gpl).
 
 ### Repository structure
