@@ -56,7 +56,7 @@ pipe = start_haystack()
 
 # the pipeline is not included as parameter of the following function,
 # because it is difficult to cache
-@st.cache(persist=True, allow_output_mutation=True)
+@st.cache(allow_output_mutation=True)
 def query(statement: str, retriever_top_k: int = 5):
     """Run query and verify statement"""
     params = {"retriever": {"top_k": retriever_top_k}}
