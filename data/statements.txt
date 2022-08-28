@@ -10,7 +10,7 @@ The Eagles won a Grammy Award
 Mick Jagger was part of the Beatles
 London calling is a hit by The Clash
 Red Hot Chili Peppers were formed in New York
-The Smiths is a very long-lived band
+The Smiths have had an influence on other bands
 U2 have participated in philanthropic initiatives
 Sweet Home Alabama is a popular song by Lynyrd Skynyrd
 Steve Vai collaborated with Frank Zappa
@@ -37,7 +37,7 @@ Guns N' Roses formed in 1987
 Dave Grohl played in Nirvana and Foo Fighters
 John Michael Stipe was part of the R.E.M.
 Eric Clapton did some gigs with Dire Straits
-Mark Knopfler plays drums
+Mark Knopfler plays guitar in Sultans of swing
 Ritchie Valens sang "La Bamba"
 Nico took part in the Velvet Underground
 David Bowie appears in Twin Peaks
@@ -45,12 +45,12 @@ The Cure made dark songs
 Cannibal Corpse is a pop punk band
 Slipknot wear masks
 Toto have sold many records
-The verve were a British band
+The Verve were a British band
 Psychokiller is a hit by Talking Heads
 Charles Manson had been involved with Beach Boys
 Toxicity is a song by System of a down
 Tracy Chapman released her debut album in 1991
-Zombie is a 1994 song by the Cranberries
+#Zombie is a 1994 song by the Cranberries
 Stratocaster is a famous guitar
 Some Slayer songs involve murder
 Incubus formation includes a DJ
