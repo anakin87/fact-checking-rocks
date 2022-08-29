@@ -59,15 +59,14 @@ def main():
         st.session_state.random_statement_requested = True
         # Re-runs the script setting the random statement as the textbox value
         # Unfortunately necessary as the Random statement button is _below_ the textbox
-        # Adapted for Streamlit>=1.12
+        # Adapted for Streamlit>=1.12.0
         if hasattr(st, "scriptrunner"):
             raise st.scriptrunner.script_runner.RerunException(
-                st.scriptrunner.script_requests.RerunData("")
+                st.scriptrunner.script_requests.RerunData(widget_states=None)
             )
-        else:
-            raise st.runtime.scriptrunner.script_runner.RerunException(
-                st.runtime.scriptrunner.script_requests.RerunData("")
-            )
+        raise st.runtime.scriptrunner.script_runner.RerunException(
+            st.runtime.scriptrunner.script_requests.RerunData(widget_states=None)
+        )
     else:
         st.session_state.random_statement_requested = False
     run_query = (
@@ -82,7 +81,7 @@ def main():
         with st.spinner("🧠 &nbsp;&nbsp; Performing neural search on documents..."):
             try:
                 st.session_state.results = query(statement, RETRIEVER_TOP_K)
-                print(statement)
+                print(f"S: {statement}")
                 time_end = time.time()
                 print(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
                 print(f"elapsed time: {time_end - time_start}")
