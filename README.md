@@ -4,7 +4,7 @@ emoji: 🎸
 colorFrom: purple
 colorTo: blue
 sdk: streamlit
-sdk_version: 1.10.0
+sdk_version: 1.15.0
 app_file: Rock_fact_checker.py
 pinned: true
 models: [sentence-transformers/msmarco-distilbert-base-tas-b, microsoft/deberta-v2-xlarge-mnli]
@@ -15,13 +15,15 @@ license: apache-2.0
 
 ## *Fact checking baseline combining dense retrieval and textual entailment*
 
-  - [Idea 💡](#idea)
-  - [System description 🪄](#system-description)
-    - [Indexing pipeline](#indexing-pipeline)
-    - [Search pipeline](#search-pipeline)
-  - [Limits and possible improvements ✨](#limits-and-possible-improvements)
-  - [Repository structure 📁](#repository-structure)
-  - [Installation 💻](#installation)
+- [Fact Checking 🎸 Rocks!    ](#fact-checking--rocks---)
+  - [*Fact checking baseline combining dense retrieval and textual entailment*](#fact-checking-baseline-combining-dense-retrieval-and-textual-entailment)
+    - [Idea](#idea)
+    - [System description](#system-description)
+      - [Indexing pipeline](#indexing-pipeline)
+      - [Search pipeline](#search-pipeline)
+    - [Limits and possible improvements](#limits-and-possible-improvements)
+    - [Repository structure](#repository-structure)
+    - [Installation](#installation)
 
 ### Idea
 💡 This project aims to show that a *naive and simple baseline* for fact checking can be built by combining dense retrieval and a textual entailment task.

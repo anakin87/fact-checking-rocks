@@ -1,5 +1,3 @@
-from curses.ascii import NL
-from logging import exception
 import streamlit as st
 
 INDEX_DIR = "data/index"
