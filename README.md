@@ -4,7 +4,7 @@ emoji: 🎸
 colorFrom: purple
 colorTo: blue
 sdk: streamlit
-sdk_version: 1.15.2
+sdk_version: 1.12.0
 app_file: Rock_fact_checker.py
 pinned: true
 models: [sentence-transformers/msmarco-distilbert-base-tas-b, microsoft/deberta-v2-xlarge-mnli]
