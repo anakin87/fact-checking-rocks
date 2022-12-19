@@ -97,8 +97,8 @@ def main():
 
     # Display results
     if st.session_state.results:
-        results = st.session_state.results
-        docs, agg_entailment_info = results["documents"], results["agg_entailment_info"]
+        docs = st.session_state.results["documents"]
+        agg_entailment_info = st.session_state.results["aggregate_entailment_info"]
 
         # show different messages depending on entailment results
         max_key = max(agg_entailment_info, key=agg_entailment_info.get)
@@ -107,12 +107,11 @@ def main():
 
         st.markdown(f"###### Aggregate entailment information:")
         col1, col2 = st.columns([2, 1])
-        agg_entailment_info = results["agg_entailment_info"]
         fig = create_ternary_plot(agg_entailment_info)
         with col1:
             st.plotly_chart(fig, use_container_width=True)
         with col2:
-            st.write(results["agg_entailment_info"])
+            st.write(agg_entailment_info)
 
         st.markdown(f"###### Most Relevant snippets:")
         df, urls = create_df_for_relevant_snippets(docs)
