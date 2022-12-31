@@ -96,14 +96,14 @@ class EntailmentChecker(BaseComponent):
         pass
 
     def get_entailment(self, premise, hypotesis):
-        with torch.no_grad():
+        with torch.inference_mode():
             inputs = self.tokenizer(
                 f"{premise}{self.tokenizer.sep_token}{hypotesis}", return_tensors="pt"
             ).to(self.devices[0])
             out = self.model(**inputs)
             logits = out.logits
             probs = (
-                torch.nn.functional.softmax(logits, dim=-1)[0, :].cpu().detach().numpy()
+                torch.nn.functional.softmax(logits, dim=-1)[0, :].detach().cpu().numpy()
             )
         entailment_dict = {k.lower(): v for k, v in zip(self.labels, probs)}
         return entailment_dict
