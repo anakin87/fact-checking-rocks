@@ -108,7 +108,7 @@ def create_df_for_relevant_snippets(docs):
         rows.append(row)
         df = pd.DataFrame(rows)
         df["Content"] = df["Content"].str.wrap(75)
-        df.style.apply(highlight_cols)
+        df = df.style.apply(highlight_cols)
 
     return df, urls
 
