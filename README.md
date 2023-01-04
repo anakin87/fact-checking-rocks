@@ -6,7 +6,7 @@ colorTo: blue
 sdk: streamlit
 sdk_version: 1.10.0
 app_file: Rock_fact_checker.py
-pinned: false
+pinned: true
 models: [sentence-transformers/msmarco-distilbert-base-tas-b, microsoft/deberta-v2-xlarge-mnli]
 license: apache-2.0
 ---
