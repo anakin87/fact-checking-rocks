@@ -1,4 +1,4 @@
-farm-haystack[faiss-cpu]==1.12.2
+farm-haystack[faiss]==1.12.2
 plotly==5.10.0
 # commented to not interfere with streamlit SDK in HF spces
 # uncomment for local installation
