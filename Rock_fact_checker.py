@@ -125,7 +125,7 @@ def main():
             explanation = explain_using_llm(
                 statement=statement, documents=docs, entailment_or_contradiction=max_key
             )
-            explanation = "#### Explanation 🧠 (experimental):\n" + explanation
+            explanation = "#### Why ❓ *(experimental)*\n" + explanation
             st.markdown(explanation)
 
 
