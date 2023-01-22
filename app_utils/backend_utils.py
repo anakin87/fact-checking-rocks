@@ -1,7 +1,9 @@
 import shutil
+from typing import List
 
+from haystack import Document
 from haystack.document_stores import FAISSDocumentStore
-from haystack.nodes import EmbeddingRetriever
+from haystack.nodes import EmbeddingRetriever, PromptNode
 from haystack.pipelines import Pipeline
 import streamlit as st
 
@@ -12,6 +14,7 @@ from app_utils.config import (
     RETRIEVER_MODEL,
     RETRIEVER_MODEL_FORMAT,
     NLI_MODEL,
+    PROMPT_MODEL,
 )
 
 
@@ -53,15 +56,37 @@ def start_haystack():
     pipe = Pipeline()
     pipe.add_node(component=retriever, name="retriever", inputs=["Query"])
     pipe.add_node(component=entailment_checker, name="ec", inputs=["retriever"])
-    return pipe
+
+    prompt_node = PromptNode(model_name_or_path=PROMPT_MODEL, max_length=150)
+
+    return pipe, prompt_node
 
 
-pipe = start_haystack()
+pipe, prompt_node = start_haystack()
 
 # the pipeline is not included as parameter of the following function,
 # because it is difficult to cache
 @st.cache(allow_output_mutation=True)
-def query(statement: str, retriever_top_k: int = 5):
+def check_statement(statement: str, retriever_top_k: int = 5):
     """Run query and verify statement"""
     params = {"retriever": {"top_k": retriever_top_k}}
     return pipe.run(statement, params=params)
+
+
+@st.cache(
+    hash_funcs={"tokenizers.Tokenizer": lambda _: None}, allow_output_mutation=True
+)
+def explain_using_llm(
+    statement: str, documents: List[Document], entailment_or_contradiction: str
+) -> str:
+    """Explain entailment/contradiction, by prompting a LLM"""
+    premise = " \n".join([doc.content.replace("\n", ". ") for doc in documents])
+    if entailment_or_contradiction == "entailment":
+        verb = "entails"
+    elif entailment_or_contradiction == "contradiction":
+        verb = "contradicts"
+
+    prompt = f"Premise: {premise}; Hypothesis: {statement}; Please explain in detail why the Premise {verb} the Hypothesis. Step by step Explanation:"
+
+    print(prompt)
+    return prompt_node(prompt)[0]

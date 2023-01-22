@@ -5,7 +5,7 @@ from json import JSONDecodeError
 
 import streamlit as st
 
-from app_utils.backend_utils import load_statements, query
+from app_utils.backend_utils import load_statements, check_statement, explain_using_llm
 from app_utils.frontend_utils import (
     set_state_if_absent,
     reset_results,
@@ -80,7 +80,7 @@ def main():
         st.session_state.statement = statement
         with st.spinner("🧠 &nbsp;&nbsp; Performing neural search on documents..."):
             try:
-                st.session_state.results = query(statement, RETRIEVER_TOP_K)
+                st.session_state.results = check_statement(statement, RETRIEVER_TOP_K)
                 print(f"S: {statement}")
                 time_end = time.time()
                 print(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))
@@ -120,6 +120,13 @@ def main():
         for doc, url in urls.items():
             str_wiki_pages += f"[{doc}]({url}) "
         st.markdown(str_wiki_pages)
+
+        if max_key != "neutral":
+            explanation = explain_using_llm(
+                statement=statement, documents=docs, entailment_or_contradiction=max_key
+            )
+            explanation = "#### Explanation 🧠 (experimental):\n" + explanation
+            st.markdown(explanation)
 
 
 main()

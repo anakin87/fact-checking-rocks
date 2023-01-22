@@ -14,3 +14,12 @@ try:
 except:
     NLI_MODEL = "valhalla/distilbart-mnli-12-1"
 print(f"Used NLI model: {NLI_MODEL}")
+
+
+# In HF Space, we use google/flan-t5-large
+# for local testing, a smaller model is better
+try:
+    PROMPT_MODEL = st.secrets["PROMPT_MODEL"]
+except:
+    PROMPT_MODEL = "google/flan-t5-small"
+print(f"Used Prompt model: {PROMPT_MODEL}")
