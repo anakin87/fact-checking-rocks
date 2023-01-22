@@ -5,10 +5,10 @@ Green Day is a punk rock band
 The Beatles' first album was released in 1985
 The Offspring is a French punk rock band
 Kurt Cobain was a biker
-Joe Cocker was American
+Joe Cocker was Swedish
 The Eagles won a Grammy Award
 Mick Jagger was part of the Beatles
-London calling is a hit by The Clash
+#London calling is a hit by The Clash
 Red Hot Chili Peppers were formed in New York
 The Smiths have had an influence on other bands
 U2 have participated in philanthropic initiatives
@@ -25,16 +25,15 @@ Ozzy Osbourne was part of the Black Sabbath
 Zucchero is an international artist
 Ozzy Osbourne was part of the Blink 182
 Jeff Buckley made a cover of Cohen's Hallelujah
-Sum 41 were originally called Kaspir
+#Sum 41 were originally called Kaspir
 Bruce Springsteen has been named "the buzz"
 Talking Heads collaborated with Brian Eno
 Chris Cornell took part in Soundgarden and Audioslave
-Chris Cornell was a member of Pearl Jam
-"There is a light that never goes out" is a song by The Smiths
+#Chris Cornell was a member of Pearl Jam
+"Panic" is a song by The Smiths
 Guns N' Roses formed in 1987
 #Izzy Stradlin took part in Guns N' Roses
-#Grunge was born in Seattle
-Dave Grohl played in Nirvana and Foo Fighters
+#Dave Grohl played in Nirvana and Foo Fighters
 John Michael Stipe was part of the R.E.M.
 Eric Clapton did some gigs with Dire Straits
 Mark Knopfler plays guitar in Sultans of swing
