@@ -122,11 +122,15 @@ def main():
         st.markdown(str_wiki_pages)
 
         if max_key != "neutral":
-            explanation = explain_using_llm(
-                statement=statement, documents=docs, entailment_or_contradiction=max_key
-            )
-            explanation = "#### Why ❓ *(experimental)*\n" + explanation
-            st.markdown(explanation)
+
+            st.markdown("#### Why ❓ *(experimental)*")
+            if st.button("Explain using a Large Language Model 🤖..."):
+                explanation = explain_using_llm(
+                    statement=statement,
+                    documents=docs,
+                    entailment_or_contradiction=max_key,
+                )
+                st.markdown(explanation)
 
 
 main()
