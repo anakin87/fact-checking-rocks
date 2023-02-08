@@ -18,7 +18,7 @@ from app_utils.config import (
 )
 
 
-@st.cache()
+@st.experimental_memo
 def load_statements():
     """Load statements from file"""
     with open(STATEMENTS_PATH) as fin:
@@ -66,7 +66,7 @@ pipe, prompt_node = start_haystack()
 
 # the pipeline is not included as parameter of the following function,
 # because it is difficult to cache
-@st.cache(allow_output_mutation=True)
+@st.experimental_memo #(allow_output_mutation=True)
 def check_statement(statement: str, retriever_top_k: int = 5):
     """Run query and verify statement"""
     params = {"retriever": {"top_k": retriever_top_k}}
