@@ -109,7 +109,8 @@ def main():
         col1, col2 = st.columns([2, 1])
         fig = create_ternary_plot(agg_entailment_info)
         with col1:
-            st.plotly_chart(fig, use_container_width=True)
+            # theme=None helps to preserve default plotly colors
+            st.plotly_chart(fig, use_container_width=True, theme=None)
         with col2:
             st.write(agg_entailment_info)
 

@@ -18,7 +18,7 @@ from app_utils.config import (
 )
 
 
-@st.cache()
+@st.cache_data
 def load_statements():
     """Load statements from file"""
     with open(STATEMENTS_PATH) as fin:
@@ -29,9 +29,7 @@ def load_statements():
 
 
 # cached to make index and models load only at start
-@st.cache(
-    hash_funcs={"builtins.SwigPyObject": lambda _: None}, allow_output_mutation=True
-)
+@st.cache_resource
 def start_haystack():
     """
     load document store, retriever, entailment checker and create pipeline
@@ -66,16 +64,14 @@ pipe, prompt_node = start_haystack()
 
 # the pipeline is not included as parameter of the following function,
 # because it is difficult to cache
-@st.cache(allow_output_mutation=True, ttl=36000)
+@st.cache_resource
 def check_statement(statement: str, retriever_top_k: int = 5):
     """Run query and verify statement"""
     params = {"retriever": {"top_k": retriever_top_k}}
     return pipe.run(statement, params=params)
 
 
-@st.cache(
-    hash_funcs={"tokenizers.Tokenizer": lambda _: None}, allow_output_mutation=True
-)
+@st.cache_resource
 def explain_using_llm(
     statement: str, documents: List[Document], entailment_or_contradiction: str
 ) -> str:

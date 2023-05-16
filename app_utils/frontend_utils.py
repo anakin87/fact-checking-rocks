@@ -1,7 +1,10 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.io as pio
 
+# this helps to preserve default plotly colors
+pio.templates.default = "plotly"
 
 entailment_html_messages = {
     "entailment": 'The knowledge base seems to <span style="color:green">confirm</span> your statement',
