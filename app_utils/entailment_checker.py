@@ -95,7 +95,21 @@ class EntailmentChecker(BaseComponent):
         return entailment_checker_result, "output_1"
 
     def run_batch(self, queries: List[str], documents: List[Document]):
-        pass
+        entailment_checker_result_batch = []
+        entailment_info_batch = self.get_entailment_batch(premise_batch=documents, hypotesis_batch=queries)
+        for doc, entailment_info in zip(documents, entailment_info_batch):
+            doc.meta["entailment_info"] = entailment_info
+            aggregate_entailment_info = {
+                "contradiction": round(entailment_info["contradiction"] / doc.score),
+                "neutral": round(entailment_info["neutral"] / doc.score),
+                "entailment": round(entailment_info["entailment"] / doc.score),
+            }
+            entailment_checker_result_batch.append({
+                "documents": [doc],
+                "aggregate_entailment_info": aggregate_entailment_info,
+            })
+        return entailment_checker_result_batch, "output_1"
+
 
     def get_entailment_dict(self, probs):
         entailment_dict = {k.lower(): v for k, v in zip(self.labels, probs)}
