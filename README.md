@@ -19,9 +19,11 @@ license: apache-2.0
 - [Fact Checking 🎸 Rocks!    ](#fact-checking--rocks---)
   - [*Fact checking baseline combining dense retrieval and textual entailment*](#fact-checking-baseline-combining-dense-retrieval-and-textual-entailment)
     - [Idea](#idea)
+    - [Presentation](#presentation)
     - [System description](#system-description)
       - [Indexing pipeline](#indexing-pipeline)
       - [Search pipeline](#search-pipeline)
+      - [Explain using a LLM](#explain-using-a-llm)
     - [Limits and possible improvements](#limits-and-possible-improvements)
     - [Repository structure](#repository-structure)
     - [Installation](#installation)
@@ -34,9 +36,13 @@ In a nutshell, the flow is as follows:
 * the system computes the text entailment between each relevant passage and the statement, using a Natural Language Inference model
 * the entailment scores are aggregated to produce a summary score.
 
+###  Presentation
+
+- [🍿 Video presentation @ Berlin Buzzwords 2023](https://www.youtube.com/watch?v=4L8Iw9CZNbU)
+- [🧑‍🏫 Slides](./presentation/fact_checking_rocks.pdf)
+
 ### System description
 🪄 This project is strongly based on [🔎 Haystack](https://github.com/deepset-ai/haystack), an open source NLP framework to realize search system. The main components of our system are an indexing pipeline and a search pipeline.
-
 
 #### Indexing pipeline
 * [Crawling](https://github.com/anakin87/fact-checking-rocks/blob/321ba7893bbe79582f8c052493acfda497c5b785/notebooks/get_wikipedia_data.ipynb): Crawl data from Wikipedia, starting from the page [List of mainstream rock performers](https://en.wikipedia.org/wiki/List_of_mainstream_rock_performers) and using the [python wrapper](https://github.com/goldsmith/Wikipedia)
@@ -55,6 +61,9 @@ In a nutshell, the flow is as follows:
 * **text entailment task**: compute the text entailment between each text passage (premise) and the user statement (hypotesis), using a Natural Language Inference model (`microsoft/deberta-v2-xlarge-mnli`). For every text passage, we have 3 scores (summing to 1): entailment, contradiction and neutral. *(For this task, I developed a custom Haystack node: `EntailmentChecker`)*
 * aggregate the text entailment scores: compute the weighted average of them, where the weight is the relevance score. **Now it is possible to tell if the knowledge base confirms, is neutral or disproves the user statement.**
 * *empirical consideration: if in the first N passages (N<K),  there is strong evidence of entailment/contradiction (partial aggregate scores > 0.5), it is better not to consider (K-N) less relevant documents.*
+
+#### Explain using a LLM
+* if there is entailment or contradiction, prompt `google/flan-t5-large`, asking why the relevant textual passages entail/contradict the user statement.
 
 ### Limits and possible improvements
  ✨ As mentioned, the current approach to fact checking is simple and naive. Some **structural limits of this approach**:
