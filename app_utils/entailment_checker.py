@@ -60,8 +60,10 @@ class EntailmentChecker(BaseComponent):
     def run(self, query: str, documents: List[Document]):
 
         scores, agg_con, agg_neu, agg_ent = 0, 0, 0, 0
-        for i, doc in enumerate(documents):
-            entailment_info = self.get_entailment(premise=doc.content, hypotesis=query)
+        premise_batch = [doc.content for doc in documents]
+        hypotesis_batch = [query] * len(documents)
+        entailment_info_batch = self.get_entailment_batch(premise_batch=premise_batch, hypotesis_batch=hypotesis_batch)
+        for i, (doc, entailment_info) in enumerate(zip(documents, entailment_info_batch)):
             doc.meta["entailment_info"] = entailment_info
 
             scores += doc.score
@@ -93,17 +95,32 @@ class EntailmentChecker(BaseComponent):
         return entailment_checker_result, "output_1"
 
     def run_batch(self, queries: List[str], documents: List[Document]):
-        pass
+        entailment_checker_result_batch = []
+        entailment_info_batch = self.get_entailment_batch(premise_batch=documents, hypotesis_batch=queries)
+        for doc, entailment_info in zip(documents, entailment_info_batch):
+            doc.meta["entailment_info"] = entailment_info
+            aggregate_entailment_info = {
+                "contradiction": round(entailment_info["contradiction"] / doc.score),
+                "neutral": round(entailment_info["neutral"] / doc.score),
+                "entailment": round(entailment_info["entailment"] / doc.score),
+            }
+            entailment_checker_result_batch.append({
+                "documents": [doc],
+                "aggregate_entailment_info": aggregate_entailment_info,
+            })
+        return entailment_checker_result_batch, "output_1"
 
-    def get_entailment(self, premise, hypotesis):
-        with torch.inference_mode():
-            inputs = self.tokenizer(
-                f"{premise}{self.tokenizer.sep_token}{hypotesis}", return_tensors="pt"
-            ).to(self.devices[0])
-            out = self.model(**inputs)
-            logits = out.logits
-            probs = (
-                torch.nn.functional.softmax(logits, dim=-1)[0, :].detach().cpu().numpy()
-            )
+
+    def get_entailment_dict(self, probs):
         entailment_dict = {k.lower(): v for k, v in zip(self.labels, probs)}
         return entailment_dict
+
+    def get_entailment_batch(self, premise_batch: List[str], hypotesis_batch: List[str]):
+        formatted_texts = [f"{premise}{self.tokenizer.sep_token}{hypotesis}" for premise, hypotesis in zip(premise_batch, hypotesis_batch)]
+        with torch.inference_mode():
+            inputs = self.tokenizer(formatted_texts, return_tensors="pt", padding=True, truncation=True).to(self.devices[0])
+            out = self.model(**inputs)
+            logits = out.logits
+            probs_batch = (torch.nn.functional.softmax(logits, dim=-1).detach().cpu().numpy() )
+        return [self.get_entailment_dict(probs) for probs in probs_batch]
+
