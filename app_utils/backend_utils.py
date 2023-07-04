@@ -7,7 +7,7 @@ from haystack.nodes import EmbeddingRetriever, PromptNode
 from haystack.pipelines import Pipeline
 import streamlit as st
 
-from app_utils.entailment_checker import EntailmentChecker
+from haystack_entailment_checker import EntailmentChecker
 from app_utils.config import (
     STATEMENTS_PATH,
     INDEX_DIR,

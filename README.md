@@ -27,6 +27,8 @@ license: apache-2.0
     - [Limits and possible improvements](#limits-and-possible-improvements)
     - [Repository structure](#repository-structure)
     - [Installation](#installation)
+      - [Entailment Checker node](#entailment-checker-node)
+      - [Fact Checking 🎸 Rocks!](#fact-checking--rocks)
 
 ### Idea
 💡 This project aims to show that a *naive and simple baseline* for fact checking can be built by combining dense retrieval and a textual entailment task.
@@ -42,7 +44,7 @@ In a nutshell, the flow is as follows:
 - [🧑‍🏫 Slides](./presentation/fact_checking_rocks.pdf)
 
 ### System description
-🪄 This project is strongly based on [🔎 Haystack](https://github.com/deepset-ai/haystack), an open source NLP framework to realize search system. The main components of our system are an indexing pipeline and a search pipeline.
+🪄 This project is strongly based on [🔎 Haystack](https://github.com/deepset-ai/haystack), an open source NLP framework that enables seamless use of Transformer models and LLMs to interact with your data. The main components of our system are an indexing pipeline and a search pipeline.
 
 #### Indexing pipeline
 * [Crawling](https://github.com/anakin87/fact-checking-rocks/blob/321ba7893bbe79582f8c052493acfda497c5b785/notebooks/get_wikipedia_data.ipynb): Crawl data from Wikipedia, starting from the page [List of mainstream rock performers](https://en.wikipedia.org/wiki/List_of_mainstream_rock_performers) and using the [python wrapper](https://github.com/goldsmith/Wikipedia)
@@ -58,7 +60,8 @@ In a nutshell, the flow is as follows:
 * the user enters a factual statement
 * compute the embedding of the user statement using the same Sentence Transformer used for indexing (`msmarco-distilbert-base-tas-b`)
 * retrieve the K most relevant text passages stored in FAISS (along with their relevance scores)
-* **text entailment task**: compute the text entailment between each text passage (premise) and the user statement (hypotesis), using a Natural Language Inference model (`microsoft/deberta-v2-xlarge-mnli`). For every text passage, we have 3 scores (summing to 1): entailment, contradiction and neutral. *(For this task, I developed a custom Haystack node: `EntailmentChecker`)*
+* the following steps are performed using the [`EntailmentChecker`, a custom Haystack node](https://github.com/anakin87/haystack-entailment-checker)
+* **text entailment task**: compute the text entailment between each text passage (premise) and the user statement (hypothesis), using a Natural Language Inference model (`microsoft/deberta-v2-xlarge-mnli`). For every text passage, we have 3 scores (summing to 1): entailment, contradiction and neutral.
 * aggregate the text entailment scores: compute the weighted average of them, where the weight is the relevance score. **Now it is possible to tell if the knowledge base confirms, is neutral or disproves the user statement.**
 * *empirical consideration: if in the first N passages (N<K),  there is strong evidence of entailment/contradiction (partial aggregate scores > 0.5), it is better not to consider (K-N) less relevant documents.*
 
@@ -83,7 +86,15 @@ While keeping this simple approach, some **improvements** could be made:
 * [data folder](./data/): all necessary data, including original Wikipedia data, FAISS Index and prepared random statements
 
 ### Installation
-💻 To install this project locally, follow these steps:
+💻
+#### Entailment Checker node
+If you want to build a similar system using the [`EntailmentChecker`](https://github.com/anakin87/haystack-entailment-checker), I strongly suggest taking a look at [the node repository](https://github.com/anakin87/haystack-entailment-checker). It can be easily installed with
+```bash
+pip install haystack-entailment-checker
+```
+
+#### Fact Checking 🎸 Rocks!
+ To install this project locally, follow these steps:
 * `git clone https://github.com/anakin87/fact-checking-rocks`
 * `cd fact-checking-rocks`
 * `pip install -r requirements.txt`
