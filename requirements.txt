@@ -1,10 +1,10 @@
-farm-haystack[faiss,inference]==1.23.0
+# we now use the Haystack Docker image, so the following line is not needed anymore
+# farm-haystack[faiss,inference]==1.23.0
+
 haystack-entailment-checker
 plotly==5.14.1
 pydantic<2
 
-# commented to not interfere with streamlit SDK in HF spces
-# uncomment for local installation
-# streamlit==1.19.0
+streamlit==1.19.0
 
 altair<5

@@ -3,9 +3,8 @@ title: Fact Checking rocks!
 emoji: 🎸
 colorFrom: purple
 colorTo: blue
-sdk: streamlit
-sdk_version: 1.19.0
-app_file: Rock_fact_checker.py
+sdk: docker
+app_port: 8501
 pinned: true
 models: [sentence-transformers/msmarco-distilbert-base-tas-b, microsoft/deberta-v2-xlarge-mnli, google/flan-t5-large]
 tags: [fact-checking, rock, natural language inference, dense retrieval, large language models, haystack, neural search]
