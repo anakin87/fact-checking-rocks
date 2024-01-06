@@ -3,8 +3,7 @@ FROM deepset/haystack:base-cpu-v1.23.0
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# try to fix permission issues with Tika
-RUN mkdir /tmp/tika
+# fix permission issues with Tika
 RUN chmod 777 /tmp/tika*
 
 # from https://huggingface.co/docs/hub/spaces-sdks-docker#permissions
@@ -17,11 +16,10 @@ ENV HOME=/home/user \
 	PATH=/home/user/.local/bin:$PATH
 
 
-
-
-# copy only the application files in /app
+# copy only the application files in $HOME/app
 # Streamlit does not allow running an app from the root directory
 COPY --chown=user Rock_fact_checker.py $HOME/app/
+COPY --chown=user README.md $HOME/app/
 COPY --chown=user pages $HOME/app/pages
 COPY --chown=user app_utils $HOME/app/app_utils
 COPY --chown=user data $HOME/app/data
