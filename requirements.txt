@@ -1,4 +1,4 @@
-farm-haystack[faiss,inference]==1.18.1
+farm-haystack[faiss,inference]==1.23.0
 haystack-entailment-checker
 plotly==5.14.1
 
