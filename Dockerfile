@@ -3,6 +3,10 @@ FROM deepset/haystack:base-cpu-v1.23.0
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# try to fix permission issues with Tika
+RUN mkdir /tmp/tika
+RUN chmod 777 /tmp/tika*
+
 # from https://huggingface.co/docs/hub/spaces-sdks-docker#permissions
 # Set up a new user named "user" with user ID 1000
 RUN useradd -m -u 1000 user
@@ -12,8 +16,7 @@ USER user
 ENV HOME=/home/user \
 	PATH=/home/user/.local/bin:$PATH
 
-# try to fix permission issues with Tika
-RUN chmod 777 /tmp/tika*
+
 
 
 # copy only the application files in /app
