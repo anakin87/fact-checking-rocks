@@ -5,7 +5,6 @@ colorFrom: purple
 colorTo: blue
 sdk: docker
 app_port: 8501
-pinned: true
 models: [sentence-transformers/msmarco-distilbert-base-tas-b, microsoft/deberta-v2-xlarge-mnli, google/flan-t5-large]
 tags: [fact-checking, rock, natural language inference, dense retrieval, large language models, haystack, neural search]
 license: apache-2.0
