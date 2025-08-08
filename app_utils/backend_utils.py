@@ -55,7 +55,8 @@ def start_haystack():
     pipe.add_node(component=retriever, name="retriever", inputs=["Query"])
     pipe.add_node(component=entailment_checker, name="ec", inputs=["retriever"])
 
-    prompt_node = PromptNode(model_name_or_path=PROMPT_MODEL, max_length=150, task_name="text2text-generation")
+    prompt_node = PromptNode(model_name_or_path=PROMPT_MODEL, max_length=150, 
+        model_kwargs={"task_name": "text2text-generation"})
 
     return pipe, prompt_node
 
