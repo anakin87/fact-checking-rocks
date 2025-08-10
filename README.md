@@ -1,7 +1,7 @@
 ---
 title: Fact Checking rocks!
 emoji: 🎸
-short_description: Fact checking baseline: dense retrieval + textual entailment
+short_description: Fact checking baseline. Dense retrieval + textual entailment
 colorFrom: purple
 colorTo: blue
 sdk: docker
